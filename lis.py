@@ -33,13 +33,26 @@ def lis_til_memoized(A, i: int, cache):
 def lis_dp(A):
     lis_til = [1] * len(A)
     answer = 1
+    highest_index = -1
     for i in range(1, len(A)):
         highest = 1
         for j in range(i-1, -1, -1):
             if A[j] < A[i]:
                 highest = max(highest, 1 + lis_til[j])
         lis_til[i] = highest
+        if lis_til[i] > answer:
+            highest_index = i
         answer = max(lis_til[i], answer)
+
+    lis_seq = [A[highest_index]]
+    prev_val = A[highest_index]
+    credit = lis_til[highest_index]
+    for j in range(highest_index-1, -1, -1):
+        if lis_til[j] == credit - 1:
+            lis_seq.insert(0, A[j])
+            credit -= 1
+
+    print("Input: %s, Highest index: %s, LIS: %s, Len: %s" % (A, highest_index, lis_seq, len(lis_seq)))
     return answer
 
 
