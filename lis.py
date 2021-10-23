@@ -19,7 +19,7 @@ def lis_memoized(A):
     for i in range(len(A)):
         answer = max(answer, lis_til_memoized(A, i, cache))
     return answer
-    
+
 def lis_til_memoized(A, i: int, cache):
     if i in cache:
         return cache[i]
@@ -44,8 +44,8 @@ def lis_dp(A):
             highest_index = i
         answer = max(lis_til[i], answer)
 
+    # Construct the longest increasing sequence
     lis_seq = [A[highest_index]]
-    prev_val = A[highest_index]
     credit = lis_til[highest_index]
     for j in range(highest_index-1, -1, -1):
         if lis_til[j] == credit - 1:
